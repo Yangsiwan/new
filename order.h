@@ -42,9 +42,9 @@ int get_all_pay(order* a[], int n);     // 입력받은 결제수단 코드와 �
 void get_all_order(order* a[]); // 주문정보가 들어있는 모든 레코드 포인터의 배열의 생성
 char* convProd(int prod_code); // 상품명에 대한 정수코드를 문자열로 변환하여 반환
 char* convPay(int pay_code);  // 결제수단에 대한 정수코드를 문자열로 변환하여 반환
-void order_update(order* p, char* time, int prod, int count,  char* id, char* phone, char* place, int pay);
+void order_update(order* p, int prod, int count, char* phone, char* place, int pay);
 void order_delete(order* p); // 입력받은 주소값의 레코드를 삭제
-void prod_update(order* p, char* prod, int count); // 해당레코드의 상품정보값 수정
+void prod_update(order* p, int prod, int count); // 해당레코드의 상품정보값 수정
 void phone_update(order* p, char* phone); // 해당레코드의 전화번호 값 수정
 void place_update(order* p, char* place); // 해당레코드의 주소값 변경
 void orderList_init();  // 포인터 배열에 저장된 모든 요소 삭제

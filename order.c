@@ -420,3 +420,34 @@ int total_count()
 #endif	
 	return sum; // 총 주문수량 값을 반환	
 }
+
+// 해당주문정보의 전반적인 모든 정보를 변경
+void order_update(order* p, int prod, int count, char* phone, char* place, int pay)
+{
+	p->prod = prod; // 상품코드 변경
+	p->count = count; // 상품수량 변경
+	p->price = tell_price(prod) * count; // 수정된 값을 반영하여 청구가격 조정
+	strcpy(p->phone, phone); // 연락처 값 변경
+	strcpy(p->place, place); // 주소지 값 변경
+	p->pay = pay; // 결제수단 코드 변경
+}
+
+// 해당주문정보의 주문상품 관련정보 변경(상품코드, 주문수량)
+void prod_update(order* p, int prod, int count)
+{
+	p->prod = prod;   // 제품코드 변경
+	p->count = count; // 주문상품 수량변경
+	p->price = tell_price(prod) * count; // 수정된 값을 반영하여 청구가격 조정
+}
+
+// 해당주문정보의 연락처 변경
+void phone_update(order* p, char* phone)
+{
+	strcpy(p->phone, phone); // 연락처 변경
+}
+
+// 해당주문정보의 주소지 변경
+void place_update(order* p, char* place)
+{
+	strcpy(p->place, place); // 주소지 변경
+}

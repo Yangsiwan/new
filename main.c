@@ -14,7 +14,7 @@ void search_prod();   // 주문정보 검색, 출력(제품명)
 void search_phone();  // 주문정보 검색, 출력(연락처)
 void search_place();  // 주문정보 검색, 출력(주소)
 void search_pay();    // 주문정보 검색, 출력(결제수단)
-//void update_record(); // 주문정보 업데이트
+void update_record(); // 주문정보 업데이트
 //void delete_record(); // 주문정보 삭제
 void load_data();     // 주문정보 로딩(파일)
 void save_data();     // 주문정보 저장(파일, 데이터형식)
@@ -38,9 +38,9 @@ int main(){
 			case 2: // 정보 검색
 				read_record();
 				break;
-			// case 3: // 정보 업데이트
-				// update_record();
-				// break;
+			case 3: // 정보 업데이트
+				update_record();
+				break;
 			// case 4: // 정보 삭제
 				// delete_record();
 				// break;
@@ -618,5 +618,89 @@ void show_report()
 				t_paymargin += order_list[j]->price; // 해당결제수단의 수익정보를 가져옴
 		}
 		printf("%d. %-5s %5d(%4.1f%%)\n", i+1, convPay(order_list[i]->pay), t_paymargin, ((double)t_paymargin / total_margin() * 100));
+	}
+}
+
+void update_record()
+{
+	char id[30], phone[30], place[30];
+	int prod, count, pay; // 제품코드, 수량, 결제수단코드
+	int update_option; // 사용자 선택 update option 값
+	
+	// id를 이용하여 검색해 찾고자 하는 주문정보 탐색
+	printf("Enter the order ID : ");
+	scanf("%s", id);
+	order* p = search_by_id(id); // id를 기반으로 해당하는 주소값 검색
+
+	if(p == NULL) // 해당id를 가진 주문정보가 존재하지 않는 경우
+	{
+		printf("Error! : Can not search this id(%s)\n", id);
+		return;
+	}
+	else // 해당 id를 가진 주문정보가 존재할 경우
+	{
+		// 사용자가 이용 가능한 update 옵션의 목록을 보여주고 선택
+		printf("-------------------------------------------\n");
+		printf("<Available update options>\n");
+		printf("1. update(prod, count, phone, place, pay)\n");
+		printf("2. update(prod, count)\n");
+		printf("3. update(phone)\n");
+		printf("4. update(place)\n");	
+		printf("-------------------------------------------\n");
+		printf("Enter the update options : ");
+		scanf("%d", &update_option); // updata option 값을 입력받음
+
+		if(update_option == 1)
+		{
+			show_prod(); // 상품목록 출력
+			printf("Enter the product code : ");
+			scanf("%d", &prod);
+			printf("Enter the product count : ");
+			scanf("%d", &count);
+			printf("Enter the phone : ");
+			scanf("%s", phone);
+			if(search_by_phone(phone) != NULL){ // 중복되는 연락처 입력에 대해서 거부
+				printf("Duplicate Phone! \n");
+				return;
+			}
+			printf("Enter the place : ");
+			scanf("%s", place);
+			printf("Enter the pay : ");
+			scanf("%d", &pay);
+			order_update(p, prod, count, phone, place, pay);
+			printf("Success! : Update is complete.\n");
+		}
+		else if(update_option == 2)
+		{
+			show_prod(); // 상품목록 출력
+			printf("Enter the product code : ");
+			scanf("%d", &prod);
+			printf("Enter the product count : ");
+			scanf("%d", &count);
+			prod_update(p, prod, count); // 업데이트
+			printf("Success! : Update is complete.\n");
+		}
+		else if(update_option == 3)
+		{
+			printf("Enter the phone : ");
+			scanf("%s", phone);
+			if(search_by_phone(phone) != NULL){ // 중복되는 연락처 입력에 대해서 거부
+			printf("Duplicate Phone! \n");
+			return;
+			}
+			phone_update(p, phone);
+			printf("Success! : Update is complete.\n"); // 업데이트
+		}
+		else if(update_option == 4)
+		{
+			printf("Enter the place : ");
+			scanf("%s", place);
+			place_update(p, place); // 업데이트
+			printf("Success! : Update is complete.\n");
+		}
+		else
+		{
+			printf("Error! : Invalid option code\n");
+		}
 	}
 }
