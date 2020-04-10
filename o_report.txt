@@ -1,0 +1,28 @@
+<The List of Order Information>
+
+[Wed Mar 30 17:34:23] /      Melon /    32 /  melonbest /   010-2365-2937 /      Iksan /     128000 /  Card
+[Thu Mar 31 22:44:41] /      Apple /    34 /    hgu0123 /   010-0123-0123 /     Pohang /      34000 /  Cash
+[Wed Apr  1 22:54:41] /      Grape /    14 /    vsd0987 /   010-0987-0987 /     Pohang /     140000 /  Card
+[Thr Apr  2 13:24:12] /     Banana /    19 /    fruit01 /   010-4658-6284 /      Busan /      38000 /  Card
+[Sun Apr  5 17:52:47] /     Orange /    45 /  fruitlove /   010-4567-4567 /      Seoul /     225000 /  Cash
+[Mon Apr  6 16:00:52] /     Banana /    56 / monkeybana /   010-3645-2658 /      Iksan /     112000 /  Card
+[Mon Apr  6 16:01:31] /      Grape /    23 /    vsd0076 /   010-7943-8674 /     Pohang /     230000 /  Cash
+
+
+Total Count :  223
+Total Margin :  907000
+
+
+<The Information of each Product>
+
+1. Apple         34(15.2%)      34000( 3.7%)
+2. Banana        75(33.6%)     150000(16.5%)
+3. Melon         32(14.3%)     128000(14.1%)
+4. Orange        45(20.2%)     225000(24.8%)
+5. Grape         37(16.6%)     370000(40.8%)
+
+
+<The Information of each Pay method>
+
+1. Card  418000(46.1%)
+2. Cash  489000(53.9%)

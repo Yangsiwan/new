@@ -1,0 +1,5 @@
+Thu Mar 31 22:54:41 1 34 hgu0123 010-0123-0123 Pohang 2
+Wed Apr  1 22:54:41 5 14 vsd0987 010-0987-0987 Pohang 1
+Thr Apr  2 13:24:12 2 19 fruit01 010-4658-6284 Busan 1
+Fri Apr  3 15:46:13 1 12 jy72910 010-7290-0927 Iksan 2
+Sun Apr  5 17:52:47 4 45 fruitlove 010-4567-4567 Seoul 2
