@@ -15,7 +15,7 @@ void search_phone();  // 주문정보 검색, 출력(연락처)
 void search_place();  // 주문정보 검색, 출력(주소)
 void search_pay();    // 주문정보 검색, 출력(결제수단)
 void update_record(); // 주문정보 업데이트
-//void delete_record(); // 주문정보 삭제
+void delete_record(); // 주문정보 삭제
 void load_data();     // 주문정보 로딩(파일)
 void save_data();     // 주문정보 저장(파일, 데이터형식)
 void save_report();   // 주문정보 저장(파일, 보고서형식)
@@ -41,9 +41,9 @@ int main(){
 			case 3: // 정보 업데이트
 				update_record();
 				break;
-			// case 4: // 정보 삭제
-				// delete_record();
-				// break;
+			case 4: // 정보 삭제
+				delete_record();
+				break;
 			case 5: // 모든정보 출력
 				list_record();
 				break;
@@ -703,4 +703,26 @@ void update_record()
 			printf("Error! : Invalid option code\n");
 		}
 	}
+}
+
+void delete_record()
+{
+    if(order_count() == 0){ // 저장된 데이터가 없다면
+        printf("Error! order info are not exist\n\n"); // 오류메시지 출력
+        return; // 그리고 종료
+    }	
+	char id[30]; // 사용자가 입력하는 id값을 저장
+	order* p; // 탐색되는 주문정보의 포인터값 저장
+
+	printf("Enter the order ID : ");
+	scanf("%s", id); // id값을 저장
+	
+	p = search_by_id(id); // 저장된 정보 중에 동일한 id값을 가진 정보탐색
+	// id를 찾지 못한 경우
+	if(p == NULL){ 
+		printf("Error! : Can not find id(%s)\n", id);
+		return;
+	}
+	order_delete(p); // 주문정보 삭제
+	printf("Success! : delete is complete\n"); // 삭제완료 시 메시지 출력
 }

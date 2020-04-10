@@ -451,3 +451,21 @@ void place_update(order* p, char* place)
 {
 	strcpy(p->place, place); // 주소지 변경
 }
+
+// 해당주문정보를 삭제
+void order_delete(order* p)
+{
+	int i; // 반복문 변수
+	int index; // 인덱스 값 저장
+
+	for(i=0 ; i<_count ; i++)
+	{
+		if(list[i] == p){
+			index = i; // 일치하는 주소값을 가지는 정보의 인덱스 저장
+			break;
+		}
+	}
+	free(p); // 해당 정보의 메모리 공간 해제
+	list[index] = NULL; // 삭제되어 빈 공간을 NULL 값으로 변경
+	_count--; // 데이터를 삭제했으므로 저장된 데이터의 수 1감소
+}
