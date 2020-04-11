@@ -624,7 +624,7 @@ void show_report()
 void update_record()
 {
 	char id[30], phone[30], place[30];
-	int prod, count, pay; // 제품코드, 수량, 결제수단코드
+	int prod, count, pay; // 제품코드, 수량
 	int update_option; // 사용자 선택 update option 값
 	
 	// id를 이용하여 검색해 찾고자 하는 주문정보 탐색
@@ -643,9 +643,10 @@ void update_record()
 		printf("-------------------------------------------\n");
 		printf("<Available update options>\n");
 		printf("1. update(prod, count, phone, place, pay)\n");
-		printf("2. update(prod, count)\n");
-		printf("3. update(phone)\n");
-		printf("4. update(place)\n");	
+		printf("2. update(product code, count)\n");
+		printf("3. update(Phone number)\n");
+		printf("4. update(place)\n");
+		printf("5. update(Pay method)\n");	
 		printf("-------------------------------------------\n");
 		printf("Enter the update options : ");
 		scanf("%d", &update_option); // updata option 값을 입력받음
@@ -664,10 +665,19 @@ void update_record()
 				return;
 			}
 			printf("Enter the place : ");
-			scanf("%s", place);
-			printf("Enter the pay : ");
+			scanf("%s", place);	
+    		printf("*********************************************\n");
+   			printf("<The list of pay method>\n\n");
+   			printf("1 - Card  2 - Cash\n");
+   			printf("*********************************************\n");
+   			printf("Enter the pay code : ");
 			scanf("%d", &pay);
 			order_update(p, prod, count, phone, place, pay);
+    		printf("*********************************************\n");
+   			printf("<The list of pay method>\n\n");
+   			printf("1 - Card  2 - Cash\n");
+   			printf("*********************************************\n");
+   			printf("Enter the pay code : ");
 			printf("Success! : Update is complete.\n");
 		}
 		else if(update_option == 2)
@@ -685,8 +695,8 @@ void update_record()
 			printf("Enter the phone : ");
 			scanf("%s", phone);
 			if(search_by_phone(phone) != NULL){ // 중복되는 연락처 입력에 대해서 거부
-			printf("Duplicate Phone! \n");
-			return;
+				printf("Duplicate Phone! \n");
+				return;
 			}
 			phone_update(p, phone);
 			printf("Success! : Update is complete.\n"); // 업데이트
@@ -696,6 +706,17 @@ void update_record()
 			printf("Enter the place : ");
 			scanf("%s", place);
 			place_update(p, place); // 업데이트
+			printf("Success! : Update is complete.\n");
+		}
+		else if(update_option == 5)
+		{
+			printf("*********************************************\n");
+   			printf("<The list of pay method>\n\n");
+   			printf("1 - Card  2 - Cash\n");
+   			printf("*********************************************\n");
+   			printf("Enter the pay code : ");
+			scanf("%d", &pay);
+			pay_update(p, pay); // 업데이트	
 			printf("Success! : Update is complete.\n");
 		}
 		else

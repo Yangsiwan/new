@@ -47,6 +47,7 @@ void order_delete(order* p); // 입력받은 주소값의 레코드를 삭제
 void prod_update(order* p, int prod, int count); // 해당레코드의 상품정보값 수정
 void phone_update(order* p, char* phone); // 해당레코드의 전화번호 값 수정
 void place_update(order* p, char* place); // 해당레코드의 주소값 변경
+void pay_update(order* p, int pay); // 해당레코드의 결제수단코드 변경
 void orderList_init();  // 포인터 배열에 저장된 모든 요소 삭제
 void gather_piece(); // 데이터 조각모음
 void sort_by_time_up(); // 시간값을 기준으로 레코드 오름차순 정렬

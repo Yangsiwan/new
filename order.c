@@ -425,31 +425,73 @@ int total_count()
 void order_update(order* p, int prod, int count, char* phone, char* place, int pay)
 {
 	p->prod = prod; // 상품코드 변경
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Update product code\n");
+#endif	
 	p->count = count; // 상품수량 변경
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Update order count\n");
+#endif	
 	p->price = tell_price(prod) * count; // 수정된 값을 반영하여 청구가격 조정
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Update order price\n");
+#endif	
 	strcpy(p->phone, phone); // 연락처 값 변경
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Upadate phone number\n");
+#endif	
 	strcpy(p->place, place); // 주소지 값 변경
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Update place\n");
+#endif	
 	p->pay = pay; // 결제수단 코드 변경
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Update pay code\n");
+#endif	
 }
 
 // 해당주문정보의 주문상품 관련정보 변경(상품코드, 주문수량)
 void prod_update(order* p, int prod, int count)
 {
 	p->prod = prod;   // 제품코드 변경
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Update product code\n");
+#endif	
 	p->count = count; // 주문상품 수량변경
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Update order count\n");
+#endif	
 	p->price = tell_price(prod) * count; // 수정된 값을 반영하여 청구가격 조정
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Update order price\n");
+#endif	
 }
 
 // 해당주문정보의 연락처 변경
 void phone_update(order* p, char* phone)
 {
 	strcpy(p->phone, phone); // 연락처 변경
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Upadate phone number\n");
+#endif	
 }
 
 // 해당주문정보의 주소지 변경
 void place_update(order* p, char* place)
 {
 	strcpy(p->place, place); // 주소지 변경
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Update place\n");
+#endif	
+}
+
+// 해당주문정보의 결제수단코드 변경
+void pay_update(order* p, int pay)
+{
+	p->pay = pay; // 결제수단 코드값 변경
+#ifdef DEBUG
+	printf("-->DEBUG : Complete Update pay code\n");
+#endif	
 }
 
 // 해당주문정보를 삭제
@@ -458,14 +500,16 @@ void order_delete(order* p)
 	int i; // 반복문 변수
 	int index; // 인덱스 값 저장
 
-	for(i=0 ; i<_count ; i++)
-	{
+	for(i=0 ; i<_count ; i++){
 		if(list[i] == p){
 			index = i; // 일치하는 주소값을 가지는 정보의 인덱스 저장
 			break;
 		}
 	}
 	free(p); // 해당 정보의 메모리 공간 해제
+#ifdef DEBUG
+	printf("-->DEBUG : The memory space is deleted\n");
+#endif	
 	list[index] = NULL; // 삭제되어 빈 공간을 NULL 값으로 변경
 	_count--; // 데이터를 삭제했으므로 저장된 데이터의 수 1감소
 }
