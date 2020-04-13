@@ -673,11 +673,6 @@ void update_record()
    			printf("Enter the pay code : ");
 			scanf("%d", &pay);
 			order_update(p, prod, count, phone, place, pay);
-    		printf("*********************************************\n");
-   			printf("<The list of pay method>\n\n");
-   			printf("1 - Card  2 - Cash\n");
-   			printf("*********************************************\n");
-   			printf("Enter the pay code : ");
 			printf("Success! : Update is complete.\n");
 		}
 		else if(update_option == 2)
