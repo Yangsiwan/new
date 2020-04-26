@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #define SIZE 100     // redability 향상을 위한 부분
-#define MAX_SIZE 10  // 저장할 수 있는 최대 주문정보의 수
+#define MAX_SIZE 100  // 저장할 수 있는 최대 주문정보의 수
 
 typedef struct _orders
 {
@@ -58,3 +58,4 @@ char* order_to_string_save(order* p); // 입력받은 주소값을 레코드 정
 void order_create_f(char* time, int prod, int count, char* id, char* phone, char* place, int pay);
 int total_margin(); // 저장된 주문정보의 모든 청구금액을 합산하여 반환
 int total_count(); // 저장된 주문정보의 총 상품주문수량을 합산하여 반환
+char* conv_time(char* time); // 입력받은 출력형태의 시간값을 코드형태로 변환

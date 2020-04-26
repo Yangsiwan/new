@@ -5,7 +5,7 @@
 #include "order.h"
 
 // 데이터가 저장되는 실질적인 부분
-order* list[MAX_SIZE]; // 주문정보를 저장할 배열생성(전역)
+order* list[MAX_SIZE] = {NULL}; // 주문정보를 저장할 배열생성(전역)
 int _count = 0;   // 저장되어 있는 정보의 수 저장(전역)
 
 // 저장가능한공간이 있는 지 확인하는 함수
@@ -141,7 +141,7 @@ char* convPay(int code){
 // 저장된 주문정보를 문자열의 형태로 변환하여 반환
 char* order_to_string(order* p){
     static char result[100]; // 문자열의 변환결과를 저장
-    sprintf(result, "[%.19s] / %10s / %5d / %10s / %15s / %10s / %10d / %5s",
+    sprintf(result, " [%.19s] | %10s | %6d | %8s | %13s | %8s | %8d | %5s |",
             p->time, convProd(p->prod), p->count,
             p->id, p->phone, p->place, p->price, convPay(p->pay));
 #ifdef DEBUG
@@ -390,7 +390,7 @@ void orderList_init()
 char* order_to_string_save(order* p)
 {
     static char result[100]; // 파일에 입력될 문자열을 저장하는 함수
-    sprintf(result, "%.19s %d %5d %10s %15s %10s %d", p->time, p->prod, p->count, p->id, p->phone, p->place, p->pay);
+    sprintf(result, "%s %d %d %s %s %s %d", p->time, p->prod, p->count, p->id, p->phone, p->place, p->pay);
 #ifdef DEBUG
 	printf("-->DEBUG : Complete convert to string for file \n");
 #endif	
@@ -512,4 +512,180 @@ void order_delete(order* p)
 #endif	
 	list[index] = NULL; // 삭제되어 빈 공간을 NULL 값으로 변경
 	_count--; // 데이터를 삭제했으므로 저장된 데이터의 수 1감소
+}
+
+void gather_piece()
+{
+	int index; // index값 저장
+	int cur; // 현재 탐색 index
+	int i; // 반복문 변수
+
+	// 배열에서 마지막으로 유효한 값을 가진 index 탐색
+	for(i=0 ; i<MAX_SIZE ; i++)
+	{
+		if(list[i] != NULL)
+			index = i;
+	}
+
+	for(cur=0 ; cur<index ; cur++)
+	{
+		if(list[cur] == NULL)
+		{
+			for(i=cur ; i<index ; i++)
+			{
+				list[i] = list[i+1];
+#ifdef DEBUG
+	printf("-->DEBUG : Adjust : list[%d] <--- list[%d]\n", i, i+1);
+#endif
+			}
+			list[index] = NULL; // 새로운 내용 추가를 위한 NULL값 삽입
+			// index 값 갱신
+			for(i=0 ; i<MAX_SIZE ; i++)
+			{
+				if(list[i] != NULL)
+					index = i;
+			}
+			cur--; // 값의 재참조를 위해 cur값 1감소
+		}
+	}
+}
+
+char* conv_time(char* time)
+{
+	static char timeCode[20];
+	char month[5];
+	strncpy(month, time+4, 3); // 문자로 된 월값 읽어오기
+	// 문자로 구성된 월값을 수의형태로 변환	
+	if(strncmp(month, "Jan", 3) == 0)
+		strcpy(timeCode, "01");
+	else if(strncmp(month, "Feb", 3) == 0)
+		strcpy(timeCode, "02");
+	else if(strncmp(month, "Mar", 3) == 0)
+		strcpy(timeCode, "03");
+	else if(strncmp(month, "Apr", 3) == 0)
+		strcpy(timeCode, "04");
+	else if(strncmp(month, "May", 3) == 0)
+		strcpy(timeCode, "05");
+	else if(strncmp(month, "Jun", 3) == 0)
+		strcpy(timeCode, "06");
+	else if(strncmp(month, "Jul", 3) == 0)
+		strcpy(timeCode, "07");
+	else if(strncmp(month, "Aug", 3) == 0)
+		strcpy(timeCode, "08");
+	else if(strncmp(month, "Sep", 3) == 0)
+		strcpy(timeCode, "09");
+	else if(strncmp(month, "Oct", 3) == 0)
+		strcpy(timeCode, "10");
+	else if(strncmp(month, "Nov", 3) == 0)
+		strcpy(timeCode, "11");
+	else if(strncmp(month, "Dec", 3) == 0)
+		strcpy(timeCode, "12");
+	else
+	{
+		printf("Error! : Invalid time value\n");
+		exit(-1);
+	}
+
+	// 일, 시간, 분, 초 값추가
+	if(*(time+8) == ' ')
+		*(time+8) = '0'; 
+	strncat(timeCode, time+8, 2); // 일 추가
+	strncat(timeCode, time+11, 2); // 시간추가
+	strncat(timeCode, time+14, 2); // 분 추가
+	strncat(timeCode, time+17, 2); // 초 추가
+	return timeCode;
+}
+
+void sort_by_time_up()
+{
+	order* p; // 배열에 저장된 주문정보의 주소값
+	char str1[20];
+	char str2[20];
+	int i, j; // 반복문 변수
+	
+
+	for(i=0 ; i<_count ; i++)
+	{
+		for(j=i ; j<_count ; j++)
+		{
+			strcpy(str1, conv_time(list[i]->time));
+			strcpy(str2, conv_time(list[j]->time));
+			
+			if(strcmp(str1, str2) > 0)
+			{
+				p = list[i];
+				list[i] = list[j];
+				list[j] = p;
+#ifdef DEBUG
+	printf("-->DEBUG : Sort data list[%d] <-- list[%d]\n", i, j);
+#endif
+			}
+		}
+	}
+}
+
+void sort_by_time_down()
+{
+	order* p; // 배열에 저장된 주문정보의 주소값
+	char str1[20];
+	char str2[20];
+	int i, j; // 반복문 변수
+	
+
+	for(i=0 ; i<_count ; i++)
+	{
+		for(j=i ; j<_count ; j++)
+		{
+			strcpy(str1, conv_time(list[i]->time));
+			strcpy(str2, conv_time(list[j]->time));
+			
+			if(strcmp(str1, str2) < 0)
+			{
+				p = list[i];
+				list[i] = list[j];
+				list[j] = p;
+#ifdef DEBUG
+	printf("-->DEBUG : Sort data list[%d] <-- list[%d]\n", i, j);
+#endif
+			}
+		}
+	}
+}
+
+void sort_by_id_up()
+{
+	order* p; // 배열에 저장된 주문정보의 주소값
+	int i, j; // 반복문 변수
+	
+	for(i=0 ; i<_count ; i++)
+	{
+		for(j=i ; j<_count ; j++)
+		{
+			if(strcmp(list[i]->id, list[j]->id) > 0)
+			{
+				p = list[i];
+				list[i] = list[j];
+				list[j] = p;
+			}
+		}
+	}
+}
+
+void sort_by_id_down()
+{	
+	order* p; // 배열에 저장된 주문정보의 주소값
+	int i, j; // 반복문 변수
+	
+	for(i=0 ; i<_count ; i++)
+	{
+		for(j=i ; j<_count ; j++)
+		{
+			if(strcmp(list[i]->id, list[j]->id) < 0)
+			{
+				p = list[i];
+				list[i] = list[j];
+				list[j] = p;
+			}
+		}
+	}
 }

@@ -19,8 +19,8 @@ void delete_record(); // 주문정보 삭제
 void load_data();     // 주문정보 로딩(파일)
 void save_data();     // 주문정보 저장(파일, 데이터형식)
 void save_report();   // 주문정보 저장(파일, 보고서형식)
-//void arrange();       // 데이터 조각모음
-//void order_sort();    // 데이터 정렬(시간, ID)
+void arrange();       // 데이터 조각모음
+void order_sort();    // 데이터 정렬(시간, ID)
 void show_margin();   // 총 판매수익 출력
 void show_report();   // 수익정보 출력(보고서 형식)
 
@@ -64,6 +64,12 @@ int main(){
 				break;
 			case 11: // 파일에 보고서 저장
 				save_report();
+				break;
+			case 12: // 데이터 조각모음
+				arrange();
+				break;
+			case 13: // 데이터 정렬
+				order_sort();
 				break;
 			case 0:
 				return 0;
@@ -143,7 +149,8 @@ void show_option(){
 	printf(" 1 - create        2 - read         3 - update\n");
 	printf(" 4 - delete        5 - list         6 - search\n");
 	printf(" 7 - show margin   8 - show report  9 - load data\n");
-	printf("10 - save file    11 - save report  0 - quit\n");
+	printf("10 - save file    11 - save report 12 - arrange\n");
+	printf("13 - sorting       0 - quit\n");
 	printf("***************************************************\n");
 }
 
@@ -229,12 +236,20 @@ void list_record(){
     order* arr[MAX_SIZE];        // 저장정보를 가져올 배열 선언
     get_all_order(arr);    // 저장정보를 가져옴
 
-    printf("------------------------------------------------------------------------------------\n");
-    printf("<Order list>\n\n");
+    printf("--------------------------------------------------------------------------------------------------------------\n\n");
+    printf("                                               <Order list>\n\n");
+    printf("--------------------------------------------------------------------------------------------------------------\n");
+    printf("| %3s | %.21s | %10s | %6s | %8s | %13s | %8s | %8s | %5s |\n", 
+	                 "Num", "         Time         ", " Product ", "Amount", "   ID   ",  "    Phone    ", " Place ", " Price ", " Pay ");
+    printf("--------------------------------------------------------------------------------------------------------------\n");
     for(i=0 ; i<count; i++)
-        printf("%s\n", order_to_string(arr[i]));
+	{
+		printf("| %3d |", i+1);
+        printf("%s\n", order_to_string(arr[i]));	
+	}
+    printf("--------------------------------------------------------------------------------------------------------------\n");
     printf("%d order information was saved.\n", count);	
-    printf("------------------------------------------------------------------------------------\n\n");
+    printf("--------------------------------------------------------------------------------------------------------------\n");
 }
 
 void search_record()
@@ -519,17 +534,25 @@ void save_report()
 	get_all_order(order_list); // 저장되어 있는 모든 주문정보를 이전에 선언한 배열 order_list로 가져옴
 	
 	// 주문리스트를 출력
-	fputs("<The List of Order Information>\n\n", f);
+    fputs("--------------------------------------------------------------------------------------------------------------\n", f);
+	fputs("                                     <The List of Order Information>\n", f);
+    fputs("--------------------------------------------------------------------------------------------------------------\n", f);
 	for(i=0; i<size; i++){
 		order* p = order_list[i];
+		fprintf(f, "| %3d | ", i+1);
 		fprintf(f,"%s\n", order_to_string(p)); // 전달받은 정보를 바탕으로 파일에 데이터 형식으로 저장
     }
+	fputs("----------------------------------------------------------\n", f);
 	// 총 수익합산 값 출력
-	fprintf(f, "\n\n%s %d\n", "Total Count : ", total_count()); // 총 주문수량 정보값을 파일에 다음의 형식으로 저장
-	fprintf(f, "%s %d\n\n\n", "Total Margin : ", total_margin()); // 총 수익정보 값을 파일에 다음의 형식으로 저장
-	
-	// 각 상품별 실적 및 관련정보 계산	
-	fputs("<The Information of each Product>\n\n", f);
+	fputs("    <Report of margin>\n", f);
+	fprintf(f, "%s %d\n", "Total Count : ", total_count()); // 총 주문수량 정보값을 파일에 다음의 형식으로 저장
+	fprintf(f, "%s %d\n", "Total Margin : ", total_margin()); // 총 수익정보 값을 파일에 다음의 형식으로 저장
+	fputs("----------------------------------------------------------\n", f);
+
+	// 각 상품별 실적 및 관련정보 계산
+	fputs("----------------------------------------------------------\n", f);
+	fputs("         <The Information of each Product>\n", f);
+	fputs("----------------------------------------------------------\n", f);
 	for(i=0 ; i<5 ; i++){
 		t_prod_count = 0; // 다시 해당변수를 활용하기 위해 0으로 초기화 - 1
 		t_prod_margi = 0; // 다시 해당변수를 활용하기 위해 0으로 초기화 - 2
@@ -545,7 +568,9 @@ void save_report()
 	}
 	
 	// 결제수단 별 실적 및 관련정보 계산
-	fputs("\n\n<The Information of each Pay method>\n\n", f);
+	fputs("----------------------------------------------------------\n", f);
+	fputs("        <The Information of each Pay method>\n", f);
+	fputs("----------------------------------------------------------\n", f);
 	for(i=0 ; i<2 ; i++){
 		t_paymargin = 0; // 다시 해당변수를 활용하기 위해 0으로 초기화
 		for(j=0 ; j<order_count() ; j++){
@@ -561,11 +586,14 @@ void save_report()
 
 void show_margin()
 {
-	printf("<Total order information>\n\n");
+	printf("---------------------------------------------------\n");
+	printf("           <Total order information>\n");
 	// 구한결과를 화면상에 출력
+	printf("---------------------------------------------------\n");
 	printf("The total order : %d\n", order_count());                     // 총 주문건수 출력
 	printf("The total selling count : %d\n", total_count());             // 총 판매수량 출력
 	printf("The total margin of orders : %d Won\n", total_margin());     // 총 판매수익 출력
+	printf("---------------------------------------------------\n");
 }
 
 void show_report()
@@ -583,18 +611,33 @@ void show_report()
 	get_all_order(order_list); // 저장되어 있는 모든 주문정보를 이전에 선언한 배열 order_list로 가져옴
 	
 	// 주문리스트를 출력
-	printf("<The List of Order Information>\n\n");
+    printf("--------------------------------------------------------------------------------------------------------------\n\n");
+    printf("                                           <Order list Report>\n\n");
+    printf("--------------------------------------------------------------------------------------------------------------\n\n");
+    printf("                                               <Order list>\n\n");
+    printf("--------------------------------------------------------------------------------------------------------------\n");
+    printf("| %3s | %.21s | %10s | %6s | %8s | %13s | %8s | %8s | %5s |\n", 
+	                 "Num", "         Time         ", " Product ", "Amount", "   ID   ",  "    Phone    ", " Place ", " Price ", " Pay ");
+    printf("--------------------------------------------------------------------------------------------------------------\n");
 	for(i=0; i<size; i++){
 		order* p = order_list[i];
+		printf("| %3d |", i+1);
 		printf("%s\n", order_to_string(p)); // 전달받은 정보를 바탕으로 파일에 데이터 형식으로 저장
     }
+    printf("--------------------------------------------------------------------------------------------------------------\n\n");
 
 	// 총 수익합산 값 출력
-	printf("\n\n%s %d\n", "Total Count : ", total_count());    // 총 주문수량 정보값을 파일에 다음의 형식으로 저장
-	printf("%s %d\n\n\n", "Total Margin : ", total_margin());  // 총 수익정보 값을 파일에 다음의 형식으로 저장
-	
-	// 각 상품별 실적 및 관련정보 계산	
-	printf("<The Information of each Product>\n\n");
+	printf("----------------------------------------\n");
+	printf("           <Margin Report>            \n");
+	printf("----------------------------------------\n");
+	printf(" %s %d\n", "Total Count : ", total_count());    // 총 주문수량 정보값을 파일에 다음의 형식으로 저장
+	printf(" %s %d\n", "Total Margin : ", total_margin());  // 총 수익정보 값을 파일에 다음의 형식으로 저장
+	printf("----------------------------------------\n\n");
+
+	// 각 상품별 실적 및 관련정보 계산
+	printf("----------------------------------------------\n");
+	printf("      <The Information of each Product>       \n");
+	printf("----------------------------------------------\n");	
 	for(i=0 ; i<5 ; i++){
 		t_prod_count = 0; // 다시 해당변수를 활용하기 위해 0으로 초기화 - 1
 		t_prod_margi = 0; // 다시 해당변수를 활용하기 위해 0으로 초기화 - 2
@@ -608,9 +651,12 @@ void show_report()
 			   t_prod_count, ((double)t_prod_count / total_count()) * 100,
 			   t_prod_margi, ((double)t_prod_margi / total_margin()) * 100); // 상품에 대한 실적정보를 파일로출력
 	}
+	printf("---------------------------------------------\n");
 	
 	// 결제수단 별 실적 및 관련정보 계산
-	printf("\n\n<The Information of each Pay method>\n\n");
+	printf("----------------------------------------\n");
+	printf("  <The Information of each Pay method>  \n");
+	printf("----------------------------------------\n");
 	for(i=0 ; i<2 ; i++){
 		t_paymargin = 0; // 다시 해당변수를 활용하기 위해 0으로 초기화
 		for(j=0 ; j<order_count() ; j++){
@@ -619,6 +665,7 @@ void show_report()
 		}
 		printf("%d. %-5s %5d(%4.1f%%)\n", i+1, convPay(order_list[i]->pay), t_paymargin, ((double)t_paymargin / total_margin() * 100));
 	}
+	printf("----------------------------------------\n");
 }
 
 void update_record()
@@ -741,4 +788,50 @@ void delete_record()
 	}
 	order_delete(p); // 주문정보 삭제
 	printf("Success! : delete is complete\n"); // 삭제완료 시 메시지 출력
+}
+
+void arrange()
+{
+	gather_piece(); // 조각모음 수행
+	printf("Arragement adjust complete!\n");
+}
+
+void order_sort()
+{
+	int sort_option; // 정렬옵션
+	
+	printf("<Available Sorting  Options>\n\n");
+	printf("1. Sorting by time (ascending order)\n");
+	printf("2. Sorting by time (descending order)\n");
+	printf("3. Sorting by ID   (ascending order)\n");
+	printf("4. Sorting by ID   (descending order)\n");
+	printf("Enter the sorting options : ");
+	scanf("%d", &sort_option);
+
+	if(sort_option == 1)
+	{
+		sort_by_time_up();
+		printf("Success! : Sorting is complete.\n");
+	}
+	else if(sort_option == 2)
+	{
+		sort_by_time_down();
+		printf("Success! : Sorting is complete.\n");
+	}
+	else if(sort_option == 3)
+	{
+		sort_by_id_up();
+		printf("Success! : Sorting is complete.\n");
+	}
+	else if(sort_option == 4)
+	{
+		sort_by_id_down();
+		printf("Success! : Sorting is complete.\n");
+	}
+	else
+	{
+		printf("Error! : Invalid sorting option code.\n");
+		return;
+	}
+	return;
 }
