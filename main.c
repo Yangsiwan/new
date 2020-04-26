@@ -793,7 +793,7 @@ void delete_record()
 void arrange()
 {
 	gather_piece(); // 조각모음 수행
-	printf("Arragement adjust complete!\n");
+	printf("Adjustment is  complete!\n");
 }
 
 void order_sort()
