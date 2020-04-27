@@ -402,7 +402,11 @@ int total_margin()
 {
     int sum = 0; // 모든 청구금액에 대한 합산값을 저장
     for(int i=0 ; i<_count ; i++)
+	{
+		if(list[i] == NULL) // 조각모음을 하지 않은 경우 발생할 오류를 방지하기 위한부분
+			continue;
         sum += list[i]->price;
+	}
 #ifdef DEBUG
 	printf("-->DEBUG : Complete calculation of total margin\n");
 #endif	
@@ -414,7 +418,11 @@ int total_count()
 {
 	int sum = 0; // 모든 주문수량에 대한 합산 값을 저장
 	for(int i=0 ; i<_count ; i++)
+	{
+		if(list[i] == NULL) // 조각모음을 하지 않은 경우 발생할 수 있는 오류를 막기위한 부분
+			continue;
 		sum += list[i]->count;
+	}
 #ifdef DEBUG
 	printf("-->DEBUG : Complete calculation of total count\n");
 #endif	

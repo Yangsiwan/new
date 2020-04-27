@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "order.h"
 
 // 기능관련 함수 선언부
@@ -304,7 +305,9 @@ void search_time(){
     int i;     // 반복문 변수
     char time[30]; // 사용자 입력 시간값 저장
     printf("Enter the search time : ");
-    scanf("%s", time);
+    getchar();// 입력버퍼에 남아있는 개행문자 삭제
+	fgets(time, 30, stdin);
+	time[(strlen(time)-1)] = '\0'; // fgets로 인하여 추가되는 개행문자를 삭제
 
     order* t_list[MAX_SIZE]; // 선별된 정보를 저장할 배열
     count = get_all_time(t_list, time);
