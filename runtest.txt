@@ -1,0 +1,144 @@
+Script started on 2020년 04월 27일 (월) 오후 06시 22분 20초
+]0;s21900429@peace: ~/Order-management[01;32ms21900429@peace[00m:[01;34m~/Order-management[00m$ ./main
+***************************************************
+        <Available option list>
+
+ 1 - create        2 - read         3 - update
+ 4 - delete        5 - list         6 - search
+ 7 - show margin   8 - show report  9 - load data
+10 - save file    11 - save report 12 - arrange
+13 - sorting       0 - quit
+***************************************************
+Enter the option code : 1
+*********************************************
+     <The list of products>
+
+[code]         [prod]           [price]
+  1            Apple             1000  
+  2            Banana            2000  
+  3            Melon             4000  
+  4            Orange            5000  
+  5            Grape             10000  
+*********************************************
+Please Enter the product code : 2
+Enter the order count : 1
+*********************************************
+Enter the order id : siwan
+Enter the order phone : 010-1234-5678
+Enter the order place : seoul
+*********************************************
+<The list of pay method>
+
+1 - Card  2 - Cash
+*********************************************
+Enter the pay code : 1
+*********************************************
+Your order is saved.
+
+
+***************************************************
+        <Available option list>
+
+ 1 - create        2 - read         3 - update
+ 4 - delete        5 - list         6 - search
+ 7 - show margin   8 - show report  9 - load data
+10 - save file    11 - save report 12 - arrange
+13 - sorting       0 - quit
+***************************************************
+Enter the option code : 5
+--------------------------------------------------------------------------------------------------------------
+
+                                               <Order list>
+
+--------------------------------------------------------------------------------------------------------------
+| Num |          Time         |   Product  | Amount |    ID    |     Phone     |   Place  |   Price  |  Pay  |
+--------------------------------------------------------------------------------------------------------------
+|   1 | [Mon Apr 27 18:22:32] |     Banana |      1 |    siwan | 010-1234-5678 |    seoul |     2000 |  Card |
+--------------------------------------------------------------------------------------------------------------
+1 order information was saved.
+--------------------------------------------------------------------------------------------------------------
+***************************************************
+        <Available option list>
+
+ 1 - create        2 - read         3 - update
+ 4 - delete        5 - list         6 - search
+ 7 - show margin   8 - show report  9 - load data
+10 - save file    11 - save report 12 - arrange
+13 - sorting       0 - quit
+***************************************************
+Enter the option code : 3
+Enter the order ID : siwan
+-------------------------------------------
+<Available update options>
+1. update(prod, count, phone, place, pay)
+2. update(product code, count)
+3. update(Phone number)
+4. update(place)
+5. update(Pay method)
+-------------------------------------------
+Enter the update options : 4
+Enter the place : sejong
+Success! : Update is complete.
+***************************************************
+        <Available option list>
+
+ 1 - create        2 - read         3 - update
+ 4 - delete        5 - list         6 - search
+ 7 - show margin   8 - show report  9 - load data
+10 - save file    11 - save report 12 - arrange
+13 - sorting       0 - quit
+***************************************************
+Enter the option code : 6 5
+--------------------------------------------------------------------------------------------------------------
+
+                                               <Order list>
+
+--------------------------------------------------------------------------------------------------------------
+| Num |          Time         |   Product  | Amount |    ID    |     Phone     |   Place  |   Price  |  Pay  |
+--------------------------------------------------------------------------------------------------------------
+|   1 | [Mon Apr 27 18:22:32] |     Banana |      1 |    siwan | 010-1234-5678 |   sejong |     2000 |  Card |
+--------------------------------------------------------------------------------------------------------------
+1 order information was saved.
+--------------------------------------------------------------------------------------------------------------
+***************************************************
+        <Available option list>
+
+ 1 - create        2 - read         3 - update
+ 4 - delete        5 - list         6 - search
+ 7 - show margin   8 - show report  9 - load data
+10 - save file    11 - save report 12 - arrange
+13 - sorting       0 - quit
+***************************************************
+Enter the option code : 2
+*********************************************
+        <Pay method option>
+
+1 - read by id  2 - read by phone
+*********************************************
+Enter the read option : 1
+Enter the id : siwan
+Order info found.
+------------------------------------------
+주문 시각 : Mon Apr 27 18:22:32
+주문 id  : siwan
+주문 상품 : Banana
+주문 수량 : 1
+연락 번호 : 010-1234-5678
+주    소 : sejong
+청구 가격 : 2000
+결제 수단 : Card
+------------------------------------------
+
+***************************************************
+        <Available option list>
+
+ 1 - create        2 - read         3 - update
+ 4 - delete        5 - list         6 - search
+ 7 - show margin   8 - show report  9 - load data
+10 - save file    11 - save report 12 - arrange
+13 - sorting       0 - quit
+***************************************************
+Enter the option code : 0
+]0;s21900429@peace: ~/Order-management[01;32ms21900429@peace[00m:[01;34m~/Order-management[00m$ exit
+
+Script done on 2020년 04월 27일 (월) 오후 06시 22분 49초
