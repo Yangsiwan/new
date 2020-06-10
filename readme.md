@@ -22,7 +22,7 @@ This is a Header2
 
 This is a normal paragraph:
 
-    printf("I love you");
+    This is a code block.
     
 end code block.
 
@@ -59,15 +59,21 @@ Link : [Naver][naverlink]
 
 [naverlink] : https://naver.com "Go naver"
 
-[Naver](https://naver.com,"Go naver")
+[Naver](https://naver.com, "Go naver")
 
 * 네이버링크: <https://naver.com/>
 * 이메일링크: <address@example.com>
 
 *single asterisks*
 _single underscores_
+
+
+
 **double asterisks**
 __double underscores__
+
+
+
 ~~cancelline~~
 
 문장중간에 사용할 시 **띄어쓰기** 를 하는 것이 좋다.
